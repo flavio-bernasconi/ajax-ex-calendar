@@ -48,6 +48,7 @@ $( document ).ready(function() {
               $(".data").append("<p>" + dataCompleta + "</p>");
 
               var daTrovare = data.format("YYYY-MM-DD");
+              // $(".data").append("<p>" + daTrovare + "</p>");
 
               arrayGiorni.push(daTrovare);
 
@@ -56,9 +57,19 @@ $( document ).ready(function() {
             console.log("date eventi ",arrayEventi);
             console.log("tutte le date",arrayGiorni);
 
+            for (var i = 0; i < arrayGiorni.length; i++) {
+              if (arrayEventi.includes(arrayGiorni[i])) {
+                console.log("date in comune ai 2 array ",arrayGiorni[i]);
+                $(".data").append("<p class='event'>" + arrayGiorni[i] + "</p>");
+              }
+              else {
+                $(".data").append("<p>" + arrayGiorni[i] + "</p>");
+              }
+            }
 
-            intersection = arrayEventi.filter(x => arrayGiorni.includes(x));
-            console.log("elementi in comunqe",intersection);
+
+            // intersection = arrayEventi.filter(x => arrayGiorni.includes(x));
+            // console.log("elementi in comune",intersection);
 
            }
 
