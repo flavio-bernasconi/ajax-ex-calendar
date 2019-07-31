@@ -1,19 +1,43 @@
 $( document ).ready(function() {
 
-  // var nascita = prompt("DD-MM-YYYY");
-  //
-  // var ore = moment(nascita, "DD-MM-YYYY");
-  // console.log(ore.isValid());
-  // var giorno = ore.format("dddd");
-  //
-  // $(".data").html(giorno);
+  // var mesi = ["Gennaio","Febbraio"]
+
+  var numero = 0;
+  var source = "https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=" + numero + ""
+  console.log(source);
+  //parte calendario
+  var mese = 01;
+  //trovo il numero di giorni nel mese
+  var numeroGiorni = parseInt(moment("2018-" + mese + "", "YYYY-MM").daysInMonth());
+  // var numeroGiorni = parseInt(moment("2018-03", "YYYY-MM").daysInMonth());
+
+  // console.log("numero di giorni mese",numeroGiorni);
+
+  //ciclo in base al numero di giorni del mese
+  for (var i = 1; i <= numeroGiorni; i++) {
+    var giorno = i;
+
+    var data = moment("" + mese + "/" + giorno + "/2018", "MM-DD-YYYY");
+
+    //stampo giorno della settimana e mese in parola
+    var cifra = data.format("YYYY-MM-DD");
+    var parole = data.format("D dddd");
+    // console.log(i,cifra);
+    $(".data").append("<div class='box'><p data-date='" + cifra + "'>" + parole + "</p></div>")
+    }
 
 
-  var source = "https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=0"
+    
+
+    $(".next").click(
+      function(){
+        numero++;
+      }
+    )
 
 
-  var arrayEventi = [];
-  var arrayGiorni = [];
+
+
 
   $.ajax(
       {
@@ -22,26 +46,28 @@ $( document ).ready(function() {
          success: function(data){
            if (data.success) {
              var oggetti = data.response;
-             console.log(oggetti);
+             // console.log(oggetti);
 
-             //fine ciclo for API
              for (var i = 0; i < oggetti.length; i++) {
-              var evento = data.response[i].date;
-              arrayEventi.push(evento);
-            }
-            //fine ciclo for
+               var oggeDate = oggetti[i].date;
+               console.log("oggeDate",oggeDate);
+               // var tronco = ogge.slice(9,ogge.length);
+               var nomeEvento = oggetti[i].name;
+               console.log(nomeEvento);
 
-            for (var i = 0; i < arrayGiorni.length; i++) {
-              if (arrayEventi.includes(arrayGiorni[i])) {
-                console.log("date in comune ai 2 array ",arrayGiorni[i]);
-                $(".data").append("<p class='event'>" + arrayGiorni[i] + "</p>");
-              }
-              else {
-                $(".data").append("<p>" + arrayGiorni[i] + "</p>");
-              }
-            }
+             }
 
 
+             $(".data p").each(function(){
+               var valoreAttributo = $(this).attr("data-date");
+               console.log(valoreAttributo);
+               if (valoreAttributo == oggeDate) {
+                 $(this).text(oggeDate + " " + nomeEvento);
+                 $(this).parent().addClass("event");
+
+               }
+
+             })
            }
 
          },
@@ -53,32 +79,9 @@ $( document ).ready(function() {
 
 
 
-      //parte calendario
-      var mese = 01;
-      //trovo il numero di giorni nel mese
-      var numeroGiorni = parseInt(moment("2018-" + mese + "", "YYYY-MM").daysInMonth());
-      // console.log("numero di giorni mese",numeroGiorni);
-
-      //ciclo in base al numero di giorni del mese
-      for (var i = 1; i <= numeroGiorni; i++) {
-        var giorno = i;
-
-        var data = moment("" + mese + "/" + giorno + "/2018", "MM-DD-YYYY");
-        //stampo giorno della settimana e mese in parola
-        var giorno = data.format("dddd, MMMM	");
-        var dataCompleta = i + " " + giorno;
 
 
-        var daTrovare = data.format("YYYY-MM-DD");
-        // $(".data").append("<p>" + daTrovare + "</p>");
-        // $(".data").append("<p attr='" + daTrovare + "'>" + dataCompleta + "</p>");
-
-        arrayGiorni.push(daTrovare);
-
-      }
 
 
-      console.log("date eventi ",arrayEventi);
-      console.log("tutte le date",arrayGiorni);
 
 });
