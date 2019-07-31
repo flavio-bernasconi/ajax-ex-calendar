@@ -12,7 +12,8 @@ $( document ).ready(function() {
   var source = "https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=0"
 
 
-  var arrayDate = [];
+  var arrayEventi = [];
+  var arrayGiorni = [];
 
   $.ajax(
       {
@@ -26,10 +27,7 @@ $( document ).ready(function() {
              //fine ciclo for API
              for (var i = 0; i < oggetti.length; i++) {
               var evento = data.response[i].date;
-              console.log(evento);
-              arrayDate.push(evento);
-
-
+              arrayEventi.push(evento);
             }
             //fine ciclo for
 
@@ -46,20 +44,21 @@ $( document ).ready(function() {
               var data = moment("" + mese + "/" + giorno + "/2018", "MM-DD-YYYY");
               //stampo giorno della settimana e mese in parola
               var giorno = data.format("dddd, MMMM	");
-              var dataCompleta = i + giorno;
-              $(".data").append("<br> <br>"+ dataCompleta);
+              var dataCompleta = i + " " + giorno;
+              $(".data").append("<p>" + dataCompleta + "</p>");
 
               var daTrovare = data.format("YYYY-MM-DD");
-              console.log("daTrovare",daTrovare);
+
+              arrayGiorni.push(daTrovare);
 
             }
 
-            console.log(arrayDate);
-            
+            console.log("date eventi ",arrayEventi);
+            console.log("tutte le date",arrayGiorni);
 
-            if (arrayDate.includes(daTrovare)) {
-              console.log("trovataaaaaa");
-            }
+
+            intersection = arrayEventi.filter(x => arrayGiorni.includes(x));
+            console.log("elementi in comunqe",intersection);
 
            }
 

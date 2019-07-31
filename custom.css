@@ -4,3 +4,11 @@
     font-family: 'Lato', sans-serif;
     box-sizing: border-box;
 }
+.data{
+  margin:auto;
+  margin-top: 50px;
+
+}
+p{
+  margin: 5px 30px;
+}
