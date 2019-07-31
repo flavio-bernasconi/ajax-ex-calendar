@@ -22,7 +22,7 @@ $( document ).ready(function() {
          success: function(data){
            if (data.success) {
              var oggetti = data.response;
-             // console.log(oggetti);
+             console.log(oggetti);
 
              //fine ciclo for API
              for (var i = 0; i < oggetti.length; i++) {
@@ -30,32 +30,6 @@ $( document ).ready(function() {
               arrayEventi.push(evento);
             }
             //fine ciclo for
-
-            //parte calendario
-            var mese = 01;
-            //trovo il numero di giorni nel mese
-            var numeroGiorni = parseInt(moment("2018-" + mese + "", "YYYY-MM").daysInMonth());
-            // console.log("numero di giorni mese",numeroGiorni);
-
-            //ciclo in base al numero di giorni del mese
-            for (var i = 1; i <= numeroGiorni; i++) {
-              var giorno = i;
-
-              var data = moment("" + mese + "/" + giorno + "/2018", "MM-DD-YYYY");
-              //stampo giorno della settimana e mese in parola
-              var giorno = data.format("dddd, MMMM	");
-              var dataCompleta = i + " " + giorno;
-              $(".data").append("<p>" + dataCompleta + "</p>");
-
-              var daTrovare = data.format("YYYY-MM-DD");
-              // $(".data").append("<p>" + daTrovare + "</p>");
-
-              arrayGiorni.push(daTrovare);
-
-            }
-
-            console.log("date eventi ",arrayEventi);
-            console.log("tutte le date",arrayGiorni);
 
             for (var i = 0; i < arrayGiorni.length; i++) {
               if (arrayEventi.includes(arrayGiorni[i])) {
@@ -68,9 +42,6 @@ $( document ).ready(function() {
             }
 
 
-            // intersection = arrayEventi.filter(x => arrayGiorni.includes(x));
-            // console.log("elementi in comune",intersection);
-
            }
 
          },
@@ -82,5 +53,32 @@ $( document ).ready(function() {
 
 
 
+      //parte calendario
+      var mese = 01;
+      //trovo il numero di giorni nel mese
+      var numeroGiorni = parseInt(moment("2018-" + mese + "", "YYYY-MM").daysInMonth());
+      // console.log("numero di giorni mese",numeroGiorni);
+
+      //ciclo in base al numero di giorni del mese
+      for (var i = 1; i <= numeroGiorni; i++) {
+        var giorno = i;
+
+        var data = moment("" + mese + "/" + giorno + "/2018", "MM-DD-YYYY");
+        //stampo giorno della settimana e mese in parola
+        var giorno = data.format("dddd, MMMM	");
+        var dataCompleta = i + " " + giorno;
+
+
+        var daTrovare = data.format("YYYY-MM-DD");
+        // $(".data").append("<p>" + daTrovare + "</p>");
+        // $(".data").append("<p attr='" + daTrovare + "'>" + dataCompleta + "</p>");
+
+        arrayGiorni.push(daTrovare);
+
+      }
+
+
+      console.log("date eventi ",arrayEventi);
+      console.log("tutte le date",arrayGiorni);
 
 });
