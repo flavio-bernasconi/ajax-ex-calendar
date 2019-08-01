@@ -122,6 +122,33 @@ $( document ).ready(function() {
 
 
 
+    var memo = {testo : "", data : ""};
+    var promemoria = [];
+
+    $(".box").click(
+      function(){
+
+
+          var inserisci = prompt("");
+          $(this).append(inserisci);
+
+
+          var attributo = $(this).find("p").attr("data-date");
+          // memo['data'] = attributo;
+          memo.testo = inserisci;
+          memo.data = attributo;
+
+          promemoria.push(memo);
+
+
+          console.log(promemoria);
+
+
+      }
+    )
+
+
+
 
 
 });
