@@ -1,9 +1,18 @@
 $( document ).ready(function() {
 
 
+  //promemoria array
+  var promemoria = [];
+  var noti = 0;
+
   var source = "https://flynn.boolean.careers/exercises/api/holidays?"
   console.log(source);
   var mese = 01;
+  var azzera = 0;
+
+  var arraySide = [];
+
+
 
   function skipMese(){
     //parte calendario
@@ -27,6 +36,65 @@ $( document ).ready(function() {
       }
 
       $(".mese h1").text(data.format("MMMM YYYY"));
+
+
+      //AGGIUNGI MEMO
+      $(".box").one("click",
+        function(){
+          //testo inserito
+            var inserisci = prompt("");
+            $(this).append("<span>" + inserisci + "</span>");
+
+            //data del box
+            var attributo = $(this).find("p").attr("data-date");
+
+            promemoria.push({testo : inserisci, data : attributo});
+
+            var noti = $(".notifiche").text(promemoria.length - azzera);
+
+
+        }
+      )
+
+      if (promemoria.length> 0) {
+        for (var i = 0; i < promemoria.length; i++) {
+          var memoData = promemoria[i].data;
+          // console.log("memodata",memoData);
+          var memoTesto = promemoria[i].testo;
+          // console.log(memoTesto);
+
+          var esiste = $("p[data-date='" + memoData + "']");
+          if (esiste) {
+            esiste.append("<span>" + memoTesto + "</span>");
+          }
+        }
+
+        $(".add").click(
+          function(){
+            $(".numeroNotifiche").empty();
+            var noti = $(".notifiche").text("0");
+            azzera = promemoria.length;
+            for (var i = 0; i < promemoria.length; i++) {
+              var memoData = promemoria[i].data;
+              var memotesto = promemoria[i].testo;
+              console.log("oggetto",promemoria[i].testo);
+
+              $(".numeroNotifiche").append("<p> Data: " + memoData + "<br>" + "Evento: " + promemoria[i].testo + "</p>" + "<hr>");
+
+
+
+
+
+
+
+
+            }
+          })
+
+
+
+      }
+
   }
 
   skipMese();
@@ -56,43 +124,6 @@ $( document ).ready(function() {
                       festate.append(" " + nomeEvento);
                       festate.parent().addClass("event");
                     }
-
-                 }
-
-
-                 $(".box").one("click",
-                   function(){
-                     //testo inserito
-                       var inserisci = prompt("");
-                       $(this).append(inserisci);
-                       console.log(memo);
-
-                       //data del box
-                       var attributo = $(this).find("p").attr("data-date");
-
-                       memo.testo = inserisci;
-                       memo.data = attributo;
-
-                       promemoria.push(memo);
-
-                       console.log("mio obj",promemoria);
-                   }
-                 )
-
-                 console.log("mio obj",promemoria);
-
-
-
-                 for (var i = 0; i < promemoria.length; i++) {
-                   var memoData = promemoria[i].data;
-                   console.log("memodata",memoData);
-                   var memoTesto = promemoria[i].testo;
-                   console.log(memoTesto);
-
-                   var esiste = $("p[data-date='" + promemoria[i].data + "']");
-                   if (esiste) {
-                     esiste.append("<span>" + promemoria[i].testo + "</span>");
-                   }
 
                  }
 
@@ -155,17 +186,31 @@ $( document ).ready(function() {
         }
           console.log(mese);
       }
+    );
+
+
+
+
+    $(".espandi").click(
+      function(){
+        $(".side-bar").toggleClass("entra");
+      }
     )
 
 
-    //memo oggetto
-    var memo = {testo : "", data : ""};
-    //promemoria array
-    var promemoria = [];
 
-
-
-
+    $(".add").click(
+      function(){
+        if ($(this).hasClass("gira")) {
+          $(this).removeClass("gira");
+          $(".side-bar").removeClass("entra");
+        }
+        else{
+          $(this).addClass("gira");
+          $(".side-bar").addClass("entra");
+        }
+      }
+    )
 
 
 });

@@ -4,6 +4,9 @@
     font-family: 'Lato', sans-serif;
     box-sizing: border-box;
 }
+html,body{
+  overflow-x: hidden;
+}
 .container{
   margin-left: 50px;
   margin-top: 20px;
@@ -11,9 +14,11 @@
 }
 
 
-p{
+.calendario p{
   margin: 5px 0;
-  color: gray
+  color: gray;
+  width: 100%;
+  height: 40px;
 }
 .mese h1::first-letter{
   text-transform: capitalize;
@@ -28,6 +33,7 @@ p{
   flex-wrap: wrap;
   margin-top: 30px;
   width: 1100px;
+  margin-bottom: 40px;
 }
 .box{
   display: flex;
@@ -52,6 +58,8 @@ p{
 
 .box p span {
   display: block;
+  color: black;
+  margin-top: 30px;
 }
 
 
@@ -94,7 +102,81 @@ p{
 
 
 
+.side-bar{
+  position: absolute;
+  right: -400px;
+  top: 0;
+  width: 400px;
+  height: 100vh;
+  background-color: rgb(0, 3, 50);
+  padding: 30px;
+  transition: 2s;
+  color: white;
+  overflow-y:auto;
 
+}
+.news{
+  position: absolute;
+  left: 900px;
+  top: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.pallino{
+  display: flex;
+  margin-left: 20px;
+  width: 30px;
+  height: 30px;
+  background: blue;
+  color: white;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+}
+.notifiche{
+  display: block;
+  margin-bottom: 1px;
+
+}
+.notifiche:hover{
+  cursor: pointer;
+}
+
+
+
+.entra{
+  right: 0;
+}
+
+
+.side-bar h1{
+  margin-bottom: 40px;
+}
+
+
+.side-bar p{
+  color: white;
+  font-size: 18px;
+  letter-spacing: 1px;
+  margin: 10px 0;
+  line-height: 2rem;
+
+}
+
+
+
+.news i{
+  font-size: 1.5rem;
+  margin-left:20px;
+  color: blue;
+
+}
+.gira{
+  transform-origin: center center;
+  transition: 1s;
+  transform: rotate(45deg);
+}
 
 
 
