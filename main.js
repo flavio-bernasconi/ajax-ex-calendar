@@ -29,11 +29,9 @@ $( document ).ready(function() {
       $(".mese h1").text(data.format("MMMM YYYY"));
   }
 
-    skipMese();
+  skipMese();
 
-
-
-    function chiamata(){
+  function chiamata(){
       $.ajax(
           {
              url : source,
@@ -72,48 +70,58 @@ $( document ).ready(function() {
 
     }
 
+  chiamata();
 
-    chiamata();
+  sunday();
+  console.log(mese);
 
 
-    //bottoni
+  //bottoni
+  //domenica diversa
+  function sunday(){
+      $(".calendario p").each(function(){
+        var testoDay = $(this).text();
+        if (testoDay.includes("domenica")) {
+          $(this).parent().addClass("dom");
+        }
+
+      })
+    }
 
     $(".next").click(
       function(){
-        $(".calendario .box").remove();
-          mese = mese+1;
-          chiamata();
+        if (mese < 12) {
+          $(".calendario .box").remove();
+            mese = mese+1;
+            chiamata();
             skipMese();
-          if (mese == 12) {
-            alert("sono finiti i mesi");
-            null;
-          }
-          console.log(mese);
+            sunday();
+        }
+        else {
+          null
+        }
+        console.log(mese);
       }
     )
 
     $(".prev").click(
       function(){
-        $(".calendario .box").remove();
-          mese = mese-1;
-          chiamata();
-          skipMese();
-          if (mese < 1) {
-            alert("sono finiti i mesi");
-            mese = 1;
-          }
+        if (mese > 1) {
+          $(".calendario .box").remove();
+            mese = mese-1;
+            chiamata();
+            skipMese();
+            sunday();
+        }
+        else {
+          null
+        }
           console.log(mese);
       }
     )
 
 
-    //domenica diversa
-    $(".calendario p").each(function(){
-      var testoDay = $(this).text();
-      if (testoDay.includes("domenica")) {
-        $(this).parent().addClass("dom");
-      }
 
-    })
+
 
 });

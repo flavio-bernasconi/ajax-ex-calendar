@@ -14,6 +14,9 @@
 p{
   margin: 5px 0;
 }
+.mese h1::first-letter{
+  text-transform: capitalize;
+}
 .event{
   color:white;
   background: rgb(116, 187, 255);
