@@ -47,9 +47,9 @@ $( document ).ready(function() {
 
                  for (var i = 0; i < oggetti.length; i++) {
                    var oggeDate = oggetti[i].date;
-                   console.log("oggeDate",oggeDate);
+                   // console.log("oggeDate",oggeDate);
                    var nomeEvento = oggetti[i].name;
-                   console.log(nomeEvento);
+                   // console.log(nomeEvento);
 
                     var festate = $("p[data-date='" + oggeDate + "']")
                     if (festate) {
@@ -59,8 +59,44 @@ $( document ).ready(function() {
 
                  }
 
-               }
 
+                 $(".box").one("click",
+                   function(){
+                     //testo inserito
+                       var inserisci = prompt("");
+                       $(this).append(inserisci);
+                       console.log(memo);
+
+                       //data del box
+                       var attributo = $(this).find("p").attr("data-date");
+
+                       memo.testo = inserisci;
+                       memo.data = attributo;
+
+                       promemoria.push(memo);
+
+                       console.log("mio obj",promemoria);
+                   }
+                 )
+
+                 console.log("mio obj",promemoria);
+
+
+
+                 for (var i = 0; i < promemoria.length; i++) {
+                   var memoData = promemoria[i].data;
+                   console.log("memodata",memoData);
+                   var memoTesto = promemoria[i].testo;
+                   console.log(memoTesto);
+
+                   var esiste = $("p[data-date='" + promemoria[i].data + "']");
+                   if (esiste) {
+                     esiste.append("<span>" + promemoria[i].testo + "</span>");
+                   }
+
+                 }
+
+               }
              },
              error: function(richiesta,stato,errore){
                 console.log("c'è un problema con il server",richiesta,stato,errore);
@@ -74,6 +110,7 @@ $( document ).ready(function() {
 
   sunday();
   console.log(mese);
+
 
 
   //bottoni
@@ -121,31 +158,11 @@ $( document ).ready(function() {
     )
 
 
-
+    //memo oggetto
     var memo = {testo : "", data : ""};
+    //promemoria array
     var promemoria = [];
 
-    $(".box").click(
-      function(){
-
-
-          var inserisci = prompt("");
-          $(this).append(inserisci);
-
-
-          var attributo = $(this).find("p").attr("data-date");
-          // memo['data'] = attributo;
-          memo.testo = inserisci;
-          memo.data = attributo;
-
-          promemoria.push(memo);
-
-
-          console.log(promemoria);
-
-
-      }
-    )
 
 
 

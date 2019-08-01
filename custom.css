@@ -50,7 +50,9 @@ p{
   color: white;
 }
 
-
+.box p span {
+  display: block;
+}
 
 
 .dom p{
