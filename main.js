@@ -69,27 +69,7 @@ $( document ).ready(function() {
           }
         }
 
-        $(".add").click(
-          function(){
-            $(".numeroNotifiche").empty();
-            var noti = $(".notifiche").text("0");
-            azzera = promemoria.length;
-            for (var i = 0; i < promemoria.length; i++) {
-              var memoData = promemoria[i].data;
-              var memotesto = promemoria[i].testo;
-              console.log("oggetto",promemoria[i].testo);
 
-              $(".numeroNotifiche").append("<p> Data: " + memoData + "<br>" + "Evento: " + promemoria[i].testo + "</p>" + "<hr>");
-
-
-
-
-
-
-
-
-            }
-          })
 
 
 
@@ -126,6 +106,21 @@ $( document ).ready(function() {
                     }
 
                  }
+
+                 $(".add").click(
+                   function(){
+                     $(".numeroNotifiche").empty();
+                     var noti = $(".notifiche").text("0");
+                     azzera = promemoria.length;
+                       for (var i = 0; i < promemoria.length; i++) {
+                         var memoData = promemoria[i].data;
+                         var memotesto = promemoria[i].testo;
+                         console.log("oggetto",promemoria[i].testo);
+
+                         $(".numeroNotifiche").append("<p> Data: " + memoData + "<br>" + "Evento: " + promemoria[i].testo + "</p>" + "<hr>");
+
+                       }
+                   })
 
                }
              },
