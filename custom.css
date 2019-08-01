@@ -7,6 +7,7 @@
 .container{
   margin-left: 50px;
   margin-top: 20px;
+  position: relative;
 }
 
 
@@ -18,7 +19,7 @@ p{
   background: rgb(116, 187, 255);
 
 }
-.data{
+.calendario{
   display: flex;
   flex-wrap: wrap;
   margin-top: 30px;
@@ -41,3 +42,30 @@ p{
   background: rgb(116, 187, 255);
   cursor: pointer;
 }
+.dom{
+  color: blue;
+}
+
+.btn-group{
+  position: absolute;
+  top: 0;
+  left: 250px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  */

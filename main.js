@@ -1,87 +1,119 @@
 $( document ).ready(function() {
 
-  // var mesi = ["Gennaio","Febbraio"]
 
-  var numero = 0;
-  var source = "https://flynn.boolean.careers/exercises/api/holidays?year=2018&month=" + numero + ""
+  var source = "https://flynn.boolean.careers/exercises/api/holidays?"
   console.log(source);
-  //parte calendario
   var mese = 01;
-  //trovo il numero di giorni nel mese
-  var numeroGiorni = parseInt(moment("2018-" + mese + "", "YYYY-MM").daysInMonth());
-  // var numeroGiorni = parseInt(moment("2018-03", "YYYY-MM").daysInMonth());
 
-  // console.log("numero di giorni mese",numeroGiorni);
+  function skipMese(){
+    //parte calendario
+    mese = mese;
+    //trovo il numero di giorni nel mese
+    var numeroGiorni = parseInt(moment("2018-" + mese + "", "YYYY-MM").daysInMonth());
+    // var numeroGiorni = parseInt(moment("2018-03", "YYYY-MM").daysInMonth());
+    // console.log("numero di giorni mese",numeroGiorni);
 
-  //ciclo in base al numero di giorni del mese
-  for (var i = 1; i <= numeroGiorni; i++) {
-    var giorno = i;
+    //ciclo in base al numero di giorni del mese
+    for (var i = 1; i <= numeroGiorni; i++) {
+      var giorno = i;
 
-    var data = moment("" + mese + "/" + giorno + "/2018", "MM-DD-YYYY");
+      var data = moment("" + mese + "/" + giorno + "/2018", "MM-DD-YYYY");
 
-    //stampo giorno della settimana e mese in parola
-    var cifra = data.format("YYYY-MM-DD");
-    var parole = data.format("D dddd");
-    // console.log(i,cifra);
-    $(".data").append("<div class='box'><p data-date='" + cifra + "'>" + parole + "</p></div>")
-    }
-
-
-    
-
-    $(".next").click(
-      function(){
-        numero++;
+      //stampo giorno della settimana e mese in parola
+      var cifra = data.format("YYYY-MM-DD");
+      var parole = data.format("D dddd");
+      // console.log(i,cifra);
+      $(".calendario").append("<div class='box'><p data-date='" + cifra + "'>" + parole + "</p></div>")
       }
-    )
+
+      $(".mese h1").text(data.format("MMMM YYYY"));
+  }
+
+    skipMese();
 
 
 
+    function chiamata(){
+      $.ajax(
+          {
+             url : source,
+             data : {
+               year : 2018,
+               month : mese-1
+             },
+             method: "GET",
+             success: function(data){
+               if (data.success) {
+                 var oggetti = data.response;
+                 // console.log(oggetti);
 
+                 for (var i = 0; i < oggetti.length; i++) {
+                   var oggeDate = oggetti[i].date;
+                   console.log("oggeDate",oggeDate);
+                   var nomeEvento = oggetti[i].name;
+                   console.log(nomeEvento);
 
-  $.ajax(
-      {
-         url : source,
-         method: "GET",
-         success: function(data){
-           if (data.success) {
-             var oggetti = data.response;
-             // console.log(oggetti);
+                    var festate = $("p[data-date='" + oggeDate + "']")
+                    if (festate) {
+                      festate.append(" " + nomeEvento);
+                      festate.parent().addClass("event");
+                    }
 
-             for (var i = 0; i < oggetti.length; i++) {
-               var oggeDate = oggetti[i].date;
-               console.log("oggeDate",oggeDate);
-               // var tronco = ogge.slice(9,ogge.length);
-               var nomeEvento = oggetti[i].name;
-               console.log(nomeEvento);
-
-             }
-
-
-             $(".data p").each(function(){
-               var valoreAttributo = $(this).attr("data-date");
-               console.log(valoreAttributo);
-               if (valoreAttributo == oggeDate) {
-                 $(this).text(oggeDate + " " + nomeEvento);
-                 $(this).parent().addClass("event");
+                 }
 
                }
 
-             })
-           }
+             },
+             error: function(richiesta,stato,errore){
+                console.log("c'è un problema con il server",richiesta,stato,errore);
+             }
+          }
+        )
 
-         },
-         error: function(richiesta,stato,errore){
-            console.log("c'è un problema con il server",richiesta,stato,errore);
-         }
+    }
+
+
+    chiamata();
+
+
+    //bottoni
+
+    $(".next").click(
+      function(){
+        $(".calendario .box").remove();
+          mese = mese+1;
+          chiamata();
+            skipMese();
+          if (mese == 12) {
+            alert("sono finiti i mesi");
+            null;
+          }
+          console.log(mese);
+      }
+    )
+
+    $(".prev").click(
+      function(){
+        $(".calendario .box").remove();
+          mese = mese-1;
+          chiamata();
+          skipMese();
+          if (mese < 1) {
+            alert("sono finiti i mesi");
+            mese = 1;
+          }
+          console.log(mese);
       }
     )
 
 
+    //domenica diversa
+    $(".calendario p").each(function(){
+      var testoDay = $(this).text();
+      if (testoDay.includes("domenica")) {
+        $(this).parent().addClass("dom");
+      }
 
-
-
-
-
+    })
 
 });
